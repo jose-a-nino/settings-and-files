@@ -1,0 +1,263 @@
+---
+author:
+- Aditya Aladangady
+- Edmund Crawley
+- William Gamber
+- Patrick Moran
+- Jose Nino
+bibliography: bib.bib
+date: July 17, 2025
+title: 'Debt Payments and Spending: Evidence from the 2023 Student Loan Payment Restart'
+format:
+  docx:
+    fig-cap-location: top
+  html:
+    fig-cap-location: top
+execute:
+  echo: false                    # Hide code chunks by default
+  warning: false
+  message: false
+---
+Introduction
+==========================================================
+
+In October 2023, roughly 40 million Americans faced a new monthly bill
+as federal student loan payments resumed after a three-year
+pandemic-induced pause.[^1] The restart of loan payments effectively
+reduced disposable income for borrowers, raising a critical question:
+How do debt payments affect household spending? Despite a growing
+academic literature studying the economic effects of student debt, there
+is surprisingly little empirical evidence on the link between student
+debt and household spending, largely due to data limitations.[^2] And yet,
+understanding the effects of student debt on household spending is
+crucial given that spending plays a central role in any measure of
+household well-being and is a key channel through which student loan
+policy may affect the macroeconomy.
+
+In this note, we exploit a unique natural experiment and granular, ZIP code level data on consumer spending to better understand how changes in student loan payments and interest accrual affect household spending. Following the announcement in June 2023 that student loan payments would resume in October 2023, we find that households began to significantly curtail spending in areas with higher exposure to student debt relative to those with lower exposure. The cutback in spending grows further following the actual resumption of required payments. This finding indicates that the payment pause had supported consumption in those areas. Our results imply that the end of forbearance amounted to a noticeable drag on aggregate demand of roughly $80 billion at an annual rate.
+
+Data and Empirical Methodology 
+===================================================================================================================
+
+We study spending responses to the resumption of student loan payments using a ZIP code by week panel of aggregate transactions from @Verisk, which covers 55 million individuals and 89 million credit and debit cards, capturing $800 billion in annual sales over our sample period.[^3]  Importantly for our use, the transaction for an individual and their card is attached to the ZIP code of the card owner’s billing address, not where the transaction was made. This feature allows us to link spending with student debt and demographic information which are also measured at the ZIP code of residence.
+
+We construct aggregate federal student loan balances for each ZIP code from the Federal Reserve Bank of New York/Equifax Consumer Credit Panel (CCP), following the methodology of @GossMangrumScaley2024 to identify “federal” student loans which are subject to the statutory pause and resumption in loan payments.[^4]  A limitation of the CCP is that while we observe student loan balances in each quarter, due to the fact legislation mandated student loan payments and delinquencies do not show up on credit reports for the first year of repayment, we do not observe actual or required payments on these loans. As a result, we evaluate the aggregate effects of student debt on consumer spending, which is the main policy relevant question when thinking about the stimulative effects of student loan forbearance.[^5] 
+
+We supplement our data with household income, education, and demographic information for each ZIP code from the 2015-2019 American Community Survey (ACS) ZCTA-level extract and the Internal Revenue Service’s Statistics of Income (SOI). In particular, we use ACS estimates of the total population, share of college graduates, the share of individuals in various ages bins, and the share of white and black individuals at a ZIP code level [@ACS_NHGIS].[^6]  From the SOI, we use ZIP code level data on mean adjusted gross income (AGI) and the distribution of households across six AGI bins for Tax Year 2020.
+
+```{r setup, include=FALSE}
+invisible(capture.output(suppressMessages(source("./code/merge.R")), type = "output"))
+invisible(capture.output(suppressMessages(source("./code/helper-functions.R")), type = "output"))
+```
+```{r}
+#| label: tbl-stats-table
+#| tbl-cap: Sample Summary Statistics
+#| eval: true
+#| echo: false
+# Load required code and data
+packages <- c("flextable", "data.table", "tidyr", "dplyr", "glue", "Hmisc", "purrr", "officer")
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+invisible(lapply(packages, library, character.only = TRUE))
+
+calculate_summary <- function(data, weights) {
+  # Calculate summary statistics
+  summary_data <- data.frame(
+    Mean = apply(data, 2, function(x) wtd.mean(x, weights, na.rm = T)),
+    SD = apply(data, 2, function(x) sqrt(wtd.var(x, weights, na.rm = T)))
+    # Median = apply(data, 2, function(x) wtd.quantile(x, weights, probs = 0.5, na.rm = T))
+  )
+  return(summary_data)
+}
+# Function to have tables autofit to page
+FitFlextableToPage <- function(ft, pgwidth = 6){
+# set as autofit to make width parameters adjustable
+ft_out <- ft %>% autofit()
+# set width as function of page width
+ft_out <- width(ft_out, width = dim(ft_out)$widths*pgwidth /(flextable_dim(ft_out)$widths))
+
+return(ft_out)
+}
+
+model_data <- process_data(filter = TRUE, start_date = "2020-12-01", sub_category = FALSE)
+
+filtered_zips <- model_data %>%
+  distinct(zipcode, .keep_all = TRUE)
+
+# Create summary stats
+filtered_summ_stats_data <- filtered_zips %>%
+  select(studentloan_upb_pc, total, mean_income, college_share, black_share, white_share) %>%
+  mutate(
+    black_share = black_share * 100,
+    white_share = white_share * 100,
+    mean_income = mean_income * 1000,
+    college_share = college_share * 100
+  ) %>%
+  calculate_summary(., .$total) %>% 
+  # Drop total column
+  slice(-c(2)) 
+names(filtered_summ_stats_data) <- c("Mean", "SD")
+
+# Format decimals places for summary stats table
+col_names <- names(filtered_summ_stats_data)
+summ_stats_data_t <- data.frame(t(filtered_summ_stats_data))
+summ_stats_data_t <- mapply(  # Iterate over each column
+  function(df, digits) {
+    formatC(df, format="f", digits=digits, big.mark=",")
+  },
+  df = summ_stats_data_t, digits = c(0, 0, 1, 1, 1)
+)
+filtered_summ_stats_data <- data.frame(t(summ_stats_data_t))  # Transpose back
+names(filtered_summ_stats_data) <- col_names # Re-create names
+
+# Create nice variable names
+filtered_summ_stats_data <- filtered_summ_stats_data %>% 
+  tibble::rownames_to_column(var = "Variable")  # Add rownames as proper column
+
+# Vector of nice labels
+pretty_labels <- c(
+  "studentloan_upb_pc" = "Student Loan Balance Per Capita ($)",
+  "mean_income"        = "Adjusted Gross Income Per Capita ($)",
+  "college_share"      = "College Share (%)",
+  "black_share"        = "Black Share (%)",
+  "white_share"        = "White Share (%)"
+)
+
+# Apply the mapping to variable column
+filtered_summ_stats_data$Variable <- recode(
+  filtered_summ_stats_data$Variable,
+  !!!pretty_labels
+)
+
+# Setup table
+ft <- flextable(filtered_summ_stats_data) %>% 
+  add_footer_lines("Note: This table provides summary statistics for the main demographic variables used as covariates as well as the main variable of interest---student loan levels per capita. All summary statistics are weighted at a ZIP code level by the total ACS population.\nSources: CCP, ACS, and IRS SOI." )
+
+table <- FitFlextableToPage(ft)
+
+table
+```
+
+@tbl-stats-table shows key ZIP code-level summary statistics in our final sample, after sample restrictions.[^7]  @fig-binscatters shows binscatter relationships between student loan balances and four key demographic characteristics. Areas with higher student loan balances per capita tend to have higher fractions of college educated workers and higher average incomes as shown in @fig-binscatters-a and also higher fractions of young workers and vice-versa for older workers as shown in @fig-binscatters-b. These correlations present a challenge to identifying the effect of student debt repayment on spending, since there may be differences in behavior between these demographic groups that may not necessarily relate to student debt.
+
+
+::: {#fig-binscatters fig-cap="Student Loan Balances and Demographic Relationships" fig-cap-location="top"}
+
+![College Share and Income](./output/figures/binscatters/binscatter-top.svg){#fig-binscatters-a width=100%}
+
+![Aged 25–34 and Aged 65+](./output/figures/binscatters/binscatter-bottom.svg){#fig-binscatters-b width=100%}
+
+:::
+*Note:* This figure shows the relationship at a ZIP code level of
+student loan per capita deciles against mean income, the share of
+college degrees, share of individuals aged 25-34, and share of
+individuals aged 65 or older.
+*Sources*: CCP, ACS, and IRS SOI. 
+
+Because our identification relies on comparing spending in areas differing in student loan balances, we must ensure that our specification appropriately addresses differences in spending growth over the period that may be driven by variation in the college share, income distribution, and age distribution across ZIP codes. This motivates the specification we employ, which allows spending growth to vary flexibly based on local demographic composition and income distribution.
+
+Empirical Methodology
+=====================================================================================
+
+We estimate a two-way fixed effects model to evaluate how the change in
+ZIP code spending varied with student loan balances per adult over the
+sample period January 2022 through April 2024. Specifically, we estimate
+the model below (@eq-event-study), which relates the 52-week change in per capita spending
+in ZIP code $i$ in week $t$ ($\Delta_{52} SpendPC_{it}$) to its per
+capita student loan balances as of September 2023 ($SLBalPC_{i}$):
+$$
+\Delta_{52} SpendPC_{it} 
+= \sum_{\tau} \beta_{\tau} \mathbf{1}_{\left\{ t = \tau \right\}}SLBalPC_{i}
++ \sum_{\tau} \gamma _\tau \mathbf{1}_{\left\{ t = \tau \right\}} \mathbf{X}_i 
++ \delta_{s(i)t} + \alpha_{i} + \varepsilon_{it}.
+$$ {#eq-event-study}
+where our main object of interest is $\beta_\tau$, which captures the
+time-varying response of consumer spending to differential exposure to
+student debt per capita. Because areas with different demographic and income characteristics may have different spending trends over this period, and these factors are correlated with student loan balances, we allow for trends in spending to vary with the ZIP code’s share of college-educated adults over the age of 25, as well as the share of the population in different age and income bins. More specifically, we control for the interaction of time dummies with the ZIP code-level: (i) college share; (ii) share of population in various age ranges from the 2015-2019 five year sample of the ACS; and (iii) share of tax filing units in various adjusted gross income ranges from the SOI, all captured in the vector $X_i$. We weight the regression by the ACS adult population for each ZIP code. We also include state-time fixed effects, $\delta_{s(i)t}$, to account for state-level differences in spending patterns owing to weather or regional economic trends.
+
+Identification rests upon the assumption that, absent the student loan payment resumption, the difference between spending growth in high- and low-student loan ZIP codes would be zero after controlling for potentially different spending trends by income bins, age bins, college share, as well as state-time and ZIP code fixed effects. While we cannot test this assumption directly, we find no evidence of differential pre-trends between areas with more or less student debt, all else equal, in the months prior to the resumption of student loan payments. That is, spending growth was not significantly different for high- and low-student loan ZIP codes prior to announcement of the payment resumption after controlling for local income and demographic factors, suggesting spending growth would have evolved similarly in these ZIP codes absent the end of forbearance. 
+[^8]
+
+Results
+===========================================================
+
+Average effects and aggregate implications
+------------------------------------------
+
+@fig-credit-png shows the causal effect of an extra $\$10,000$ of student loan debt on consumer spending, measured at the weekly level. The figure shows no significant change in consumer spending between January 2022 and October 2023, consistent with our assumption of conditional parallel trends before the payments resumed in October 2023. Following the announcement in June 2023 that student loan payments would resume in October 2023, we see a gradual and persistent decline in consumer spending.[^9]  The gradual decline in consumer spending is consistent with widely-documented features of household behavior, including inattention, consumption commitments, and habits.
+
+To better understand the magnitude and timing of the consumption response, @fig-credit-avg shows the average weekly effect of an extra $\$10,000$ of student loan debt on consumer spending for the post-announcement period up to the actual resumption of repayments, and the period following the resumption of payments. The figure shows a statistically significant consumption response following the policy announcement in anticipation of the payment change. This anticipatory effect is large: households reduce their spending in this post-announcement period by about $\$6.20$ per $\$10,000$ of student loan debt, compared to $\$12.20$ in the period after payments resume. 
+
+![Dynamic Response of Student Debt on Spending](output/figures/event-studies/credit-ma-cluster.svg){#fig-credit-png width=100%}
+
+*Note:* This figure shows the evolution of spending following the
+resumption of student loan repayment for all 18,178 ZIP codes in the
+model sample, which is obtained from running the model specified in
+@eq-event-study. The gray shaded region indicates $95\%$
+confidence bands. The solid orange line
+signifies **June 7, 2023**---the date at which Congress vetoed President
+Biden's plan for student loan relief. The dotted
+[blue]{style="color: blue"} line signifies **September 1, 2023**, which
+is the date at which interest began to accrue on student loan balances.
+The blue-shaded region is the month of **October 2023**, the period in
+which monthly payments for student loan balances restarted following the
+end of student loan forbearance.\
+*Sources*: Verisk, CCP, ACS, and IRS SOI.
+
+![Average Response of Student Debt on Spending](./output/figures/event-studies/event-study-binned-cluster.svg){#fig-credit-avg width=100%}
+
+
+*Note:* This figure shows the evolution of spending over for 18,178 ZIP codes
+over three time periods: (1) "Pre-Annoucement", defined as **June 7,
+2023** when Congress vetoed President Biden's plan for student loan
+relief; (2) "Post-Announcement", defined as after June 7, 2023 and up
+until payment resumption on **October 15, 2023**; (3) "Payment
+Resumption", defined as after October 15, 2023. We obtain the estimates
+by running the model specified in
+@eq-event-study using "Pre-Announcement" as the base period.
+We include 95% confidence bands for the "Post-Announcement" and "Payment
+Resumption" periods using standard errors clustered at the ZIP code
+level.\
+*Sources*: Verisk, CCP, ACS, and IRS SOI.
+
+To contextualize our regression estimates, consider the following back-of-the-envelope calculations for the implied partial equilibrium effect of the end of student loan forbearance on the level of nominal PCE and GDP. We begin with our estimate of the weekly effect of the resumption of student loan payments on spending: $12.20 per $10,000 of balances. This estimate translates to an annualized reduction in spending of [$630] per year for every $10,000 in student loan balances. These numbers imply an annualized cutback in spending of $1590 for the median student loan borrower and $2980 for the mean.[^10]  Given that we find about $1.25 trillion of eligible student debt at the time the policy ended, our estimates imply that the resumption of student loan payments reduced consumer spending by $80 billion at an annual rate, which is roughly 0.3 percent of GDP or 0.4 percent of personal consumption expenditures in the first quarter of 2024.[^11] 
+
+While much of the literature on spending responses to policy changes focuses on measuring the marginal propensity to consume (MPC) from a shock, our results do not directly translate to comparable figures. In particular, because servicers were not required to report required payments to credit bureaus for at least a year after the end of forbearance, the CCP provides reliable measures of debt levels, but not required payments in the quarters immediately after payment resumption. However, we are able to translate the spending response to debt into an MPC by utilizing information after servicers began reporting required payments and delinquencies in 2024:Q3. Overall, these data imply an aggregate payment-to-balance ratio of roughly 5.75 percent per year[^12].  Applying these ratios to our estimated effects per-dollar-of-debt, we find an MPC just over 1 dollar of consumption per dollar of payment—somewhat high but not out of the realm of other estimates of MPCs out of permanent income shocks.[^13] 
+
+Our study provides the first evidence on the response in consumer spending following the restart of student loan repayment using actual spending data, and we find evidence that the end of forbearance caused meaningful drag on aggregate demand. Our results imply somewhat larger responses than other studies that did not have actual spending data. @chakrabarti2023borrower, for example, conduct a survey where they ask borrowers how they plan to adjust their spending between October and December 2023 due to the resumption of student loan repayment. Those authors find that borrowers expect to reduce consumption by around $56 per month. Our numbers suggest that the effect of the resumption of payments may have been larger than their survey suggested; we find that the median borrower reduced consumption by about $130 per month. 
+
+Conclusion 
+=======================================================================
+
+In this note, we estimate how household spending changed following the end of student loan forbearance. To do this, we exploit ZIP code-level variation in student loan balances, merged with high-frequency data on ZIP code household spending. Our estimates imply that households reduced spending meaningfully following the resumption of required payments in October 2023. The average consumer cut back spending by $1590 per year. Further, a partial-equilibrium exercise suggests that the policy was supporting consumer spending by $80 billion at an annual rate.
+
+References 
+=======================================================================
+
+[^1]: See: <https://www.gao.gov/products/gao-24-107150>.
+
+[^2]: For more comprehensive reviews of the literature, see @amromin2016education, @lochner2016student, and @yannelis2022student. Numerous papers document relationships between student debt and economic outcomes, such as home ownership [@mezza2020student], job match quality [@field2009educational; @rothstein2011constrained; @luo2019assets], entrepreneurship [@krishnan2019cost], the likelihood of default [@armona2022student; @mueller2019rise], borrowing [@dinerstein2024debt], graduate school enrollment [@chakrabarti2023tuition], and job mobility [@jacob2024value]. @chakrabarti2023borrower conduct a survey in August 2023, immediately prior to the resumption of student loan payments, and find that American consumers expected modest reductions in spending when payments resumed
+
+[^3]: Raw data were processed by Verisk (now owned by Transunion), who then aggregated and scaled the data to provide us with estimates of the total number and value of credit and debit card transactions in every ZIP code at a weekly frequency.  Similar data at a monthly frequency from Verisk are used in @mian2023partisan.
+
+[^4]: As discussed by @dinerstein2024debt, the payment pause only applied to “federal” loans, which included all loans in the Direct Loan program, as well as roughly $100 billion in FFEL loans issued by private lenders and later bought by the Department of Education. These loans comprise the majority of overall student loan balances. The CCP does not provide a federal loan identifier, and we utilize the method proposed by @GossMangrumScaley2024 to classify servicer sub-portfolios as “federal” if they showed past-due balances fall to zero by 2020:Q3 and remain at zero through the forbearance period. Our approach leads us to classify a total of [$1.25 trillion] of the total [$1.45 trillion] in student loan balances in 2023:Q3 as “federal” balances, and the aggregate series aligns well over time with data from the Department of Education (not shown here).
+
+[^5]: As we discuss later in this note, we estimate that the average annual payment-to-balance ratio is roughly 5.75 percent per year.
+
+[^6]: We convert the ZCTA-level ACS aggregates from NHGIS to ZIP codes using the crosswalk provided by the Health Resources and Services Administration: https://geocarenavigator.hrsa.gov/.
+
+[^7]: We drop ZIP codes with a total ACS population below 2,000 as well as areas like college towns and military bases where the ACS and CCP populations do not align due to differences in billing addresses and residences. In total, our final sample includes 18,178 ZIP codes out of a total of 32,341 in Verisk. However, because most of the ZIP codes we drop have a low population, we maintain over 96 percent of the total ACS population and close to 98% of total student loan balances.
+
+[^8]: To further assess the validity of our empirical design, we perform a placebo test using auto loan debt, which was unaffected by the restart of student loan payments in October 2023, and which we therefore expect to be uncorrelated with any trends in consumer spending. To perform this placebo test, we re-estimate @eq-event-study using auto loan debt rather than student loan debt as the main independent variable. Reassuringly, we find no significant effect of auto loan debt on consumer spending during the entirety of our sample period.
+
+[^9]: We note that student loan payments began at different times for different borrowers during the month of October, hence the blue shaded region in @fig-credit-avg captures the window during which payments resumed for student loan borrowers.
+
+[^10]: These numbers are based on the median debt level for a borrower in the 2022 Survey of Consumer Finances, about $25,000 and the mean student loan debt per borrower, about $47,000.
+
+[^11]: Note that while our estimates may include very local (i.e., within-ZIP code) general equilibrium effects, these estimates and do not consider the numerous national general equilibrium effects that could either offset or magnify this change in aggregate demand.
+
+[^12]: Because of changes in Income Driven Repayment plans and deferrals due to the SAVES Act in 2024, we opt to utilize data after reporting resumed rather than older data on payments. We find the ratio of annual required payments to balances for federal loans in the CCP where required payments are positive was 10.4 percent per year in 2024:Q3 through 2025:Q1. In addition, roughly 30 percent of federal loans by balance had required payments of 0. (Zero required payments reflect a combination of grace periods/deferrals, in-school status, and forbearance. See: https://www.congress.gov/crs-product/IF12896)
+
+[^13]: See, for example, @gelman2023AEJ.

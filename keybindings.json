@@ -1,0 +1,137 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+	// LaTeX Keybindings
+	{
+		"key": "ctrl+enter",
+		"command": "latex-workshop.build",
+		"when": "!config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+	},
+	{
+		"key": "ctrl+alt+b",
+		"command": "-latex-workshop.build",
+		"when": "!config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+	},
+	{
+		"key": "ctrl+alt+v",
+		"command": "latex-workshop.view",
+		"when": "config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+	},
+	{
+		"key": "ctrl+l alt+v",
+		"command": "-latex-workshop.view",
+		"when": "config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+	},
+	{
+		"key": "ctrl+shift+alt+v",
+		"command": "latex-workshop.view",
+		"when": "!config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+	},
+	{
+		"key": "ctrl+alt+v",
+		"command": "-latex-workshop.view",
+		"when": "!config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+	},
+	// Switching between windows
+	// { 
+	//     "key": "ctrl+tab", 
+	//     "command": "workbench.action.openPreviousRecentlyUsedEditor" 
+	// }, 
+	// {
+	//      "key": "ctrl+shift+tab", 
+	//      "command": "workbench.action.openNextRecentlyUsedEditor" 
+	// },
+	// Terminal and Editor switching hotkeys
+	{
+		"key": "ctrl+k",
+		"command": "workbench.action.terminal.focus"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "workbench.action.focusActiveEditorGroup",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+pagedown",
+		"command": "workbench.action.terminal.focusNext",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+pageup",
+		"command": "workbench.action.terminal.focusPrevious",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+shift+l",
+		"command": "cursorMove",
+		"when": "editorTextFocus",
+		"args": {
+			"to": "viewPortCenter",
+			"by": "line"
+		}
+	},
+	// Keybindings for R scripts. 
+	{ 
+		"key": "ctrl+shift+enter",          
+		  "command": "r.runSource",
+		"when": "editorTextFocus && editorLangId == /r|R" 
+	},
+	{
+		"key": "Ctrl+Shift+m",
+		"command": "type",
+		"args": { "text": " %>% \n" },
+		"when": "editorTextFocus && editorLangId == /r|rmd|quarto|R"
+	},
+	{
+		"key": "Alt+-",
+		"command": "type",
+		"args": { "text": " <- " },
+		"when": "editorTextFocus && editorLangId == /r|rmd|quarto|R"
+	},
+	{
+		"key": "Ctrl+shift+r",
+		"command": "editor.action.insertSnippet",
+		"when": "editorTextFocus",
+		"args": {
+		"snippet": "# section ----------------------------------------------------------------------\n"
+		}
+	},
+	// Keybindings for radian terminal autocompletion
+	{
+		"key": "Ctrl+Shift+m",
+		"command": "workbench.action.terminal.sendSequence",
+		"args": { "text": " %>% \n" },
+		"when": "terminalFocus"
+	},
+	{
+		"key": "Alt+-",
+		"command": "workbench.action.terminal.sendSequence",
+		"args": { "text": " <- " },
+		"when": "terminalFocus"
+	},
+	// Show httpgd window if closed
+	{
+		"key": "ctrl+alt+p",
+		"command": "r.runCommand",
+		"when": "editorTextFocus && editorLangId == 'r'",
+		"args": ".vsc.browser(httpgd::hgd_url(), viewer = \"Beside\")"
+	},
+	// Jupyter settings
+	{
+		"key": "ctrl+enter",
+		"command": "jupyter.execSelectionInteractive",
+		"when": "editorTextFocus && isWorkspaceTrusted && jupyter.ownsSelection && !findInputFocussed && !jupyter.webExtension && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
+	},
+	{
+		"key": "shift+enter",
+		"command": "-jupyter.execSelectionInteractive",
+		"when": "editorTextFocus && isWorkspaceTrusted && jupyter.ownsSelection && !findInputFocussed && !jupyter.webExtension && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
+	},
+	{
+		"key": "ctrl+shift+enter",
+		"command": "jupyter.runFileInteractive"
+	},
+	{
+		"key": "alt+backspace",
+		"command": "deleteAllLeft"
+	}
+  ]

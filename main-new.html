@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aditya Aladangady">
+<meta name="author" content="Edmund Crawley">
+<meta name="author" content="William Gamber">
+<meta name="author" content="Patrick Moran">
+<meta name="author" content="Jose Nino">
+<meta name="dcterms.date" content="2025-07-17">
+
+<title>Debt Payments and Spending: Evidence from the 2023 Student Loan Payment Restart</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="main-new_files/libs/clipboard/clipboard.min.js"></script>
+<script src="main-new_files/libs/quarto-html/quarto.js"></script>
+<script src="main-new_files/libs/quarto-html/popper.min.js"></script>
+<script src="main-new_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="main-new_files/libs/quarto-html/anchor.min.js"></script>
+<link href="main-new_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="main-new_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="main-new_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="main-new_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="main-new_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="main-new_files/libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="main-new_files/libs/tabwid-1.1.3/tabwid.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="main-new.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Debt Payments and Spending: Evidence from the 2023 Student Loan Payment Restart</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aditya Aladangady </p>
+             <p>Edmund Crawley </p>
+             <p>William Gamber </p>
+             <p>Patrick Moran </p>
+             <p>Jose Nino </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 17, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In October 2023, roughly 40 million Americans faced a new monthly bill as federal student loan payments resumed after a three-year pandemic-induced pause.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The restart of loan payments effectively reduced disposable income for borrowers, raising a critical question: How do debt payments affect household spending? Despite a growing academic literature studying the economic effects of student debt, there is surprisingly little empirical evidence on the link between student debt and household spending, largely due to data limitations.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> And yet, understanding the effects of student debt on household spending is crucial given that spending plays a central role in any measure of household well-being and is a key channel through which student loan policy may affect the macroeconomy.</p>
+<p>In this note, we exploit a unique natural experiment and granular, ZIP code level data on consumer spending to better understand how changes in student loan payments and interest accrual affect household spending. Following the announcement in June 2023 that student loan payments would resume in October 2023, we find that households began to significantly curtail spending in areas with higher exposure to student debt relative to those with lower exposure. The cutback in spending grows further following the actual resumption of required payments. This finding indicates that the payment pause had supported consumption in those areas. Our results imply that the end of forbearance amounted to a noticeable drag on aggregate demand of roughly $80 billion at an annual rate.</p>
+</section>
+<section id="data-and-empirical-methodology" class="level1">
+<h1>Data and Empirical Methodology</h1>
+<p>We study spending responses to the resumption of student loan payments using a ZIP code by week panel of aggregate transactions from <span class="citation" data-cites="Verisk">Verisk (<a href="#ref-Verisk" role="doc-biblioref">2024</a>)</span>, which covers 55 million individuals and 89 million credit and debit cards, capturing $800 billion in annual sales over our sample period.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Importantly for our use, the transaction for an individual and their card is attached to the ZIP code of the card owner’s billing address, not where the transaction was made. This feature allows us to link spending with student debt and demographic information which are also measured at the ZIP code of residence.</p>
+<p>We construct aggregate federal student loan balances for each ZIP code from the Federal Reserve Bank of New York/Equifax Consumer Credit Panel (CCP), following the methodology of <span class="citation" data-cites="GossMangrumScaley2024">Goss, Mangrum, and Scally (<a href="#ref-GossMangrumScaley2024" role="doc-biblioref">2024</a>)</span> to identify “federal” student loans which are subject to the statutory pause and resumption in loan payments.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> A limitation of the CCP is that while we observe student loan balances in each quarter, due to the fact legislation mandated student loan payments and delinquencies do not show up on credit reports for the first year of repayment, we do not observe actual or required payments on these loans. As a result, we evaluate the aggregate effects of student debt on consumer spending, which is the main policy relevant question when thinking about the stimulative effects of student loan forbearance.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>We supplement our data with household income, education, and demographic information for each ZIP code from the 2015-2019 American Community Survey (ACS) ZCTA-level extract and the Internal Revenue Service’s Statistics of Income (SOI). In particular, we use ACS estimates of the total population, share of college graduates, the share of individuals in various ages bins, and the share of white and black individuals at a ZIP code level <span class="citation" data-cites="ACS_NHGIS">(<a href="#ref-ACS_NHGIS" role="doc-biblioref">Manson et al. 2024</a>)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> From the SOI, we use ZIP code level data on mean adjusted gross income (AGI) and the distribution of households across six AGI bins for Tax Year 2020.</p>
+<div class="cell">
+<div id="tbl-stats-table" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stats-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Sample Summary Statistics
+</figcaption>
+<div aria-describedby="tbl-stats-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-7a4f87fc{}.cl-7a49a58a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7a4c16f8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7a4c32aa{width:3.948in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32b4{width:1.026in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32b5{width:3.948in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32b6{width:1.026in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32be{width:3.948in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32bf{width:1.026in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32c8{width:3.948in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32c9{width:1.026in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32ca{width:3.948in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7a4c32d2{width:1.026in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-7a4f87fc"><thead><tr style="overflow-wrap:break-word;"><th class="cl-7a4c32aa"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">Variable</span></p></th><th class="cl-7a4c32b4"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">Mean</span></p></th><th class="cl-7a4c32b4"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">SD</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-7a4c32b5"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">Student Loan Balance Per Capita ($)</span></p></td><td class="cl-7a4c32b6"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">3,800</span></p></td><td class="cl-7a4c32b6"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">1,731</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-7a4c32b5"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">Adjusted Gross Income Per Capita ($)</span></p></td><td class="cl-7a4c32b6"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">79,393</span></p></td><td class="cl-7a4c32b6"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">62,798</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-7a4c32b5"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">College Share (%)</span></p></td><td class="cl-7a4c32b6"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">29.8</span></p></td><td class="cl-7a4c32b6"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">12.5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-7a4c32be"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">Black Share (%)</span></p></td><td class="cl-7a4c32bf"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">12.8</span></p></td><td class="cl-7a4c32bf"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">17.5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-7a4c32c8"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">White Share (%)</span></p></td><td class="cl-7a4c32c9"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">65.2</span></p></td><td class="cl-7a4c32c9"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">22.9</span></p></td></tr></tbody><tfoot><tr style="overflow-wrap:break-word;"><td colspan="3" class="cl-7a4c32ca"><p class="cl-7a4c16f8"><span class="cl-7a49a58a">Note: This table provides summary statistics for the main demographic variables used as covariates as well as the main variable of interest---student loan levels per capita. All summary statistics are weighted at a ZIP code level by the total ACS population.</span><br><span class="cl-7a49a58a">Sources: CCP, ACS, and IRS SOI.</span></p></td></tr></tfoot></table></div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="#tbl-stats-table" class="quarto-xref">Table&nbsp;1</a> shows key ZIP code-level summary statistics in our final sample, after sample restrictions.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> <a href="#fig-binscatters" class="quarto-xref">Figure&nbsp;1</a> shows binscatter relationships between student loan balances and four key demographic characteristics. Areas with higher student loan balances per capita tend to have higher fractions of college educated workers and higher average incomes as shown in <a href="#fig-binscatters-a" class="quarto-xref">Figure&nbsp;1 (a)</a> and also higher fractions of young workers and vice-versa for older workers as shown in <a href="#fig-binscatters-b" class="quarto-xref">Figure&nbsp;1 (b)</a>. These correlations present a challenge to identifying the effect of student debt repayment on spending, since there may be differences in behavior between these demographic groups that may not necessarily relate to student debt.</p>
+<div id="fig-binscatters" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="top">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-binscatters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Student Loan Balances and Demographic Relationships
+</figcaption>
+<div aria-describedby="fig-binscatters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-binscatters-a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-binscatters-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) College Share and Income
+</figcaption>
+<div aria-describedby="fig-binscatters-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./output/figures/binscatters/binscatter-top.svg" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-binscatters">
+</div>
+</figure>
+</div>
+<div id="fig-binscatters-b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-binscatters-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Aged 25–34 and Aged 65+
+</figcaption>
+<div aria-describedby="fig-binscatters-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./output/figures/binscatters/binscatter-bottom.svg" class="img-fluid figure-img" style="width:100.0%" data-ref-parent="fig-binscatters">
+</div>
+</figure>
+</div>
+</div>
+</figure>
+</div>
+<p><em>Note:</em> This figure shows the relationship at a ZIP code level of student loan per capita deciles against mean income, the share of college degrees, share of individuals aged 25-34, and share of individuals aged 65 or older. <em>Sources</em>: CCP, ACS, and IRS SOI.</p>
+<p>Because our identification relies on comparing spending in areas differing in student loan balances, we must ensure that our specification appropriately addresses differences in spending growth over the period that may be driven by variation in the college share, income distribution, and age distribution across ZIP codes. This motivates the specification we employ, which allows spending growth to vary flexibly based on local demographic composition and income distribution.</p>
+</section>
+<section id="empirical-methodology" class="level1">
+<h1>Empirical Methodology</h1>
+<p>We estimate a two-way fixed effects model to evaluate how the change in ZIP code spending varied with student loan balances per adult over the sample period January 2022 through April 2024. Specifically, we estimate the model below (<a href="#eq-event-study" class="quarto-xref">Equation&nbsp;1</a>), which relates the 52-week change in per capita spending in ZIP code <span class="math inline">\(i\)</span> in week <span class="math inline">\(t\)</span> (<span class="math inline">\(\Delta_{52} SpendPC_{it}\)</span>) to its per capita student loan balances as of September 2023 (<span class="math inline">\(SLBalPC_{i}\)</span>): <span id="eq-event-study"><span class="math display">\[
+\Delta_{52} SpendPC_{it}
+= \sum_{\tau} \beta_{\tau} \mathbf{1}_{\left\{ t = \tau \right\}}SLBalPC_{i}
++ \sum_{\tau} \gamma _\tau \mathbf{1}_{\left\{ t = \tau \right\}} \mathbf{X}_i
++ \delta_{s(i)t} + \alpha_{i} + \varepsilon_{it}.
+\tag{1}\]</span></span> where our main object of interest is <span class="math inline">\(\beta_\tau\)</span>, which captures the time-varying response of consumer spending to differential exposure to student debt per capita. Because areas with different demographic and income characteristics may have different spending trends over this period, and these factors are correlated with student loan balances, we allow for trends in spending to vary with the ZIP code’s share of college-educated adults over the age of 25, as well as the share of the population in different age and income bins. More specifically, we control for the interaction of time dummies with the ZIP code-level: (i) college share; (ii) share of population in various age ranges from the 2015-2019 five year sample of the ACS; and (iii) share of tax filing units in various adjusted gross income ranges from the SOI, all captured in the vector <span class="math inline">\(X_i\)</span>. We weight the regression by the ACS adult population for each ZIP code. We also include state-time fixed effects, <span class="math inline">\(\delta_{s(i)t}\)</span>, to account for state-level differences in spending patterns owing to weather or regional economic trends.</p>
+<p>Identification rests upon the assumption that, absent the student loan payment resumption, the difference between spending growth in high- and low-student loan ZIP codes would be zero after controlling for potentially different spending trends by income bins, age bins, college share, as well as state-time and ZIP code fixed effects. While we cannot test this assumption directly, we find no evidence of differential pre-trends between areas with more or less student debt, all else equal, in the months prior to the resumption of student loan payments. That is, spending growth was not significantly different for high- and low-student loan ZIP codes prior to announcement of the payment resumption after controlling for local income and demographic factors, suggesting spending growth would have evolved similarly in these ZIP codes absent the end of forbearance. <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<section id="average-effects-and-aggregate-implications" class="level2">
+<h2 class="anchored" data-anchor-id="average-effects-and-aggregate-implications">Average effects and aggregate implications</h2>
+<p><a href="#fig-credit-png" class="quarto-xref">Figure&nbsp;2</a> shows the causal effect of an extra <span class="math inline">\(\$10,000\)</span> of student loan debt on consumer spending, measured at the weekly level. The figure shows no significant change in consumer spending between January 2022 and October 2023, consistent with our assumption of conditional parallel trends before the payments resumed in October 2023. Following the announcement in June 2023 that student loan payments would resume in October 2023, we see a gradual and persistent decline in consumer spending.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> The gradual decline in consumer spending is consistent with widely-documented features of household behavior, including inattention, consumption commitments, and habits.</p>
+<p>To better understand the magnitude and timing of the consumption response, <a href="#fig-credit-avg" class="quarto-xref">Figure&nbsp;3</a> shows the average weekly effect of an extra <span class="math inline">\(\$10,000\)</span> of student loan debt on consumer spending for the post-announcement period up to the actual resumption of repayments, and the period following the resumption of payments. The figure shows a statistically significant consumption response following the policy announcement in anticipation of the payment change. This anticipatory effect is large: households reduce their spending in this post-announcement period by about <span class="math inline">\(\$6.20\)</span> per <span class="math inline">\(\$10,000\)</span> of student loan debt, compared to <span class="math inline">\(\$12.20\)</span> in the period after payments resume.</p>
+<div id="fig-credit-png" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-credit-png-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Dynamic Response of Student Debt on Spending
+</figcaption>
+<div aria-describedby="fig-credit-png-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="output/figures/event-studies/credit-ma-cluster.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+</figure>
+</div>
+<p><em>Note:</em> This figure shows the evolution of spending following the resumption of student loan repayment for all 18,178 ZIP codes in the model sample, which is obtained from running the model specified in <a href="#eq-event-study" class="quarto-xref">Equation&nbsp;1</a>. The gray shaded region indicates <span class="math inline">\(95\%\)</span> confidence bands. The solid orange line signifies <strong>June 7, 2023</strong>—the date at which Congress vetoed President Biden’s plan for student loan relief. The dotted <span style="color: blue">blue</span> line signifies <strong>September 1, 2023</strong>, which is the date at which interest began to accrue on student loan balances. The blue-shaded region is the month of <strong>October 2023</strong>, the period in which monthly payments for student loan balances restarted following the end of student loan forbearance.<br>
+<em>Sources</em>: Verisk, CCP, ACS, and IRS SOI.</p>
+<div id="fig-credit-avg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-credit-avg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Average Response of Student Debt on Spending
+</figcaption>
+<div aria-describedby="fig-credit-avg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./output/figures/event-studies/event-study-binned-cluster.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+</figure>
+</div>
+<p><em>Note:</em> This figure shows the evolution of spending over for 18,178 ZIP codes over three time periods: (1) “Pre-Annoucement”, defined as <strong>June 7, 2023</strong> when Congress vetoed President Biden’s plan for student loan relief; (2) “Post-Announcement”, defined as after June 7, 2023 and up until payment resumption on <strong>October 15, 2023</strong>; (3) “Payment Resumption”, defined as after October 15, 2023. We obtain the estimates by running the model specified in <a href="#eq-event-study" class="quarto-xref">Equation&nbsp;1</a> using “Pre-Announcement” as the base period. We include 95% confidence bands for the “Post-Announcement” and “Payment Resumption” periods using standard errors clustered at the ZIP code level.<br>
+<em>Sources</em>: Verisk, CCP, ACS, and IRS SOI.</p>
+<p>To contextualize our regression estimates, consider the following back-of-the-envelope calculations for the implied partial equilibrium effect of the end of student loan forbearance on the level of nominal PCE and GDP. We begin with our estimate of the weekly effect of the resumption of student loan payments on spending: $12.20 per $10,000 of balances. This estimate translates to an annualized reduction in spending of [$630] per year for every $10,000 in student loan balances. These numbers imply an annualized cutback in spending of $1590 for the median student loan borrower and $2980 for the mean.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> Given that we find about $1.25 trillion of eligible student debt at the time the policy ended, our estimates imply that the resumption of student loan payments reduced consumer spending by $80 billion at an annual rate, which is roughly 0.3 percent of GDP or 0.4 percent of personal consumption expenditures in the first quarter of 2024.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>While much of the literature on spending responses to policy changes focuses on measuring the marginal propensity to consume (MPC) from a shock, our results do not directly translate to comparable figures. In particular, because servicers were not required to report required payments to credit bureaus for at least a year after the end of forbearance, the CCP provides reliable measures of debt levels, but not required payments in the quarters immediately after payment resumption. However, we are able to translate the spending response to debt into an MPC by utilizing information after servicers began reporting required payments and delinquencies in 2024:Q3. Overall, these data imply an aggregate payment-to-balance ratio of roughly 5.75 percent per year<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. Applying these ratios to our estimated effects per-dollar-of-debt, we find an MPC just over 1 dollar of consumption per dollar of payment—somewhat high but not out of the realm of other estimates of MPCs out of permanent income shocks.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a></p>
+<p>Our study provides the first evidence on the response in consumer spending following the restart of student loan repayment using actual spending data, and we find evidence that the end of forbearance caused meaningful drag on aggregate demand. Our results imply somewhat larger responses than other studies that did not have actual spending data. <span class="citation" data-cites="chakrabarti2023borrower">Chakrabarti, Mangrum, et al. (<a href="#ref-chakrabarti2023borrower" role="doc-biblioref">2023</a>)</span>, for example, conduct a survey where they ask borrowers how they plan to adjust their spending between October and December 2023 due to the resumption of student loan repayment. Those authors find that borrowers expect to reduce consumption by around $56 per month. Our numbers suggest that the effect of the resumption of payments may have been larger than their survey suggested; we find that the median borrower reduced consumption by about $130 per month.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>In this note, we estimate how household spending changed following the end of student loan forbearance. To do this, we exploit ZIP code-level variation in student loan balances, merged with high-frequency data on ZIP code household spending. Our estimates imply that households reduced spending meaningfully following the resumption of required payments in October 2023. The average consumer cut back spending by $1590 per year. Further, a partial-equilibrium exercise suggests that the policy was supporting consumer spending by $80 billion at an annual rate.</p>
+</section>
+<section id="references" class="level1 unnumbered">
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-amromin2016education" class="csl-entry" role="listitem">
+Amromin, Gene, and Janice Eberly. 2016. <span>“Education Financing and Student Lending.”</span> <em>Annual Review of Financial Economics</em> 8 (1): 289–315.
+</div>
+<div id="ref-armona2022student" class="csl-entry" role="listitem">
+Armona, Luis, Rajashri Chakrabarti, and Michael F Lovenheim. 2022. <span>“Student Debt and Default: The Role of for-Profit Colleges.”</span> <em>Journal of Financial Economics</em> 144 (1): 67–92.
+</div>
+<div id="ref-chakrabarti2023tuition" class="csl-entry" role="listitem">
+Chakrabarti, Rajashri, Vyacheslav Fos, Andres Liberman, and Constantine Yannelis. 2023. <span>“Tuition, Debt, and Human Capital.”</span> <em>The Review of Financial Studies</em> 36 (4): 1667–1702.
+</div>
+<div id="ref-chakrabarti2023borrower" class="csl-entry" role="listitem">
+Chakrabarti, Rajashri, Daniel Mangrum, Sasha Thomas, and Wilbert Van der Klaauw. 2023. <span>“Borrower Expectations for the Return of Student Loan Repayment.”</span> Federal Reserve Bank of New York.
+</div>
+<div id="ref-dinerstein2024debt" class="csl-entry" role="listitem">
+Dinerstein, Michael, Constantine Yannelis, and Ching-Tse Chen. 2024. <span>“Debt Moratoria: Evidence from Student Loan Forbearance.”</span> <em>American Economic Review: Insights</em> 6 (2): 196–213. <a href="https://doi.org/10.1257/aeri.20230032">https://doi.org/10.1257/aeri.20230032</a>.
+</div>
+<div id="ref-field2009educational" class="csl-entry" role="listitem">
+Field, Erica. 2009. <span>“Educational Debt Burden and Career Choice: Evidence from a Financial Aid Experiment at NYU Law School.”</span> <em>American Economic Journal: Applied Economics</em> 1 (1): 1–21.
+</div>
+<div id="ref-gelman2023AEJ" class="csl-entry" role="listitem">
+Gelman, Michael, Yuriy Gorodnichenko, Shachar Kariv, Dmitri Koustas, Matthew D. Shapiro, Dan Silverman, and Steven Tadelis. 2023. <span>“The Response of Consumer Spending to Changes in Gasoline Prices.”</span> <em>American Economic Journal: Macroeconomics</em> 15 (2): 129–60. <a href="https://doi.org/10.1257/mac.20210024">https://doi.org/10.1257/mac.20210024</a>.
+</div>
+<div id="ref-GossMangrumScaley2024" class="csl-entry" role="listitem">
+Goss, Jacob, Daniel Mangrum, and Joelle Scally. 2024. <span>“Assessing the Relative Progressivity of the Biden Administration’s Federal Student Loan Forgiveness Proposal.”</span> <em>Education Finance and Policy</em> 19 (4): 716–33. <a href="https://doi.org/10.1162/edfp_a_00429">https://doi.org/10.1162/edfp_a_00429</a>.
+</div>
+<div id="ref-jacob2024value" class="csl-entry" role="listitem">
+Jacob, Brian A, Damon Jones, and Benjamin J Keys. 2024. <span>“The Value of Student Debt Relief and the Role of Administrative Barriers: Evidence from the Teacher Loan Forgiveness Program.”</span> <em>Journal of Labor Economics</em> 42 (S1): S261–92.
+</div>
+<div id="ref-krishnan2019cost" class="csl-entry" role="listitem">
+Krishnan, Karthik, and Pinshuo Wang. 2019. <span>“The Cost of Financing Education: Can Student Debt Hinder Entrepreneurship?”</span> <em>Management Science</em> 65 (10): 4522–54.
+</div>
+<div id="ref-lochner2016student" class="csl-entry" role="listitem">
+Lochner, Lance, and Alexander Monge-Naranjo. 2016. <span>“Student Loans and Repayment: Theory, Evidence, and Policy.”</span> In <em>Handbook of the Economics of Education</em>, 5:397–478. Elsevier.
+</div>
+<div id="ref-luo2019assets" class="csl-entry" role="listitem">
+Luo, Mi, and Simon Mongey. 2019. <span>“Assets and Job Choice: Student Debt, Wages and Amenities.”</span>
+</div>
+<div id="ref-ACS_NHGIS" class="csl-entry" role="listitem">
+Manson, Steven, Jonathan Schroeder, David Van Riper, Katherine Nowles, Tracy Kugler, Finn Roberts, and Steven Ruggles. 2024. <span>“IPUMS National Historical Geographic Information System: Version 19.0 [Dataset].”</span> <a href="https://doi.org/10.18128/D050.V19.0">https://doi.org/10.18128/D050.V19.0</a>.
+</div>
+<div id="ref-mezza2020student" class="csl-entry" role="listitem">
+Mezza, Alvaro, Daniel Ringo, Shane Sherlund, and Kamila Sommer. 2020. <span>“Student Loans and Homeownership.”</span> <em>Journal of Labor Economics</em> 38 (1): 215–60.
+</div>
+<div id="ref-mian2023partisan" class="csl-entry" role="listitem">
+Mian, Atif, Amir Sufi, and Nasim Khoshkhou. 2023. <span>“Partisan Bias, Economic Expectations, and Household Spending.”</span> <em>The Review of Economics and Statistics</em> 105 (3): 493–510. <a href="https://doi.org/10.1162/rest_a_01056">https://doi.org/10.1162/rest_a_01056</a>.
+</div>
+<div id="ref-mueller2019rise" class="csl-entry" role="listitem">
+Mueller, Holger M, and Constantine Yannelis. 2019. <span>“The Rise in Student Loan Defaults.”</span> <em>Journal of Financial Economics</em> 131 (1): 1–19.
+</div>
+<div id="ref-rothstein2011constrained" class="csl-entry" role="listitem">
+Rothstein, Jesse, and Cecilia Elena Rouse. 2011. <span>“Constrained After College: Student Loans and Early-Career Occupational Choices.”</span> <em>Journal of Public Economics</em> 95 (1-2): 149–63.
+</div>
+<div id="ref-Verisk" class="csl-entry" role="listitem">
+Verisk. 2024. <span>“Verisk Commerce Signals Spend Tracker.”</span>
+</div>
+<div id="ref-yannelis2022student" class="csl-entry" role="listitem">
+Yannelis, Constantine, and Greg Tracey. 2022. <span>“Student Loans and Borrower Outcomes.”</span> <em>Annual Review of Financial Economics</em> 14 (1): 167–86.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>See: <a href="https://www.gao.gov/products/gao-24-107150" class="uri">https://www.gao.gov/products/gao-24-107150</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For more comprehensive reviews of the literature, see <span class="citation" data-cites="amromin2016education">Amromin and Eberly (<a href="#ref-amromin2016education" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="lochner2016student">Lochner and Monge-Naranjo (<a href="#ref-lochner2016student" role="doc-biblioref">2016</a>)</span>, and <span class="citation" data-cites="yannelis2022student">Yannelis and Tracey (<a href="#ref-yannelis2022student" role="doc-biblioref">2022</a>)</span>. Numerous papers document relationships between student debt and economic outcomes, such as home ownership <span class="citation" data-cites="mezza2020student">(<a href="#ref-mezza2020student" role="doc-biblioref">Mezza et al. 2020</a>)</span>, job match quality <span class="citation" data-cites="field2009educational rothstein2011constrained luo2019assets">(<a href="#ref-field2009educational" role="doc-biblioref">Field 2009</a>; <a href="#ref-rothstein2011constrained" role="doc-biblioref">Rothstein and Rouse 2011</a>; <a href="#ref-luo2019assets" role="doc-biblioref">Luo and Mongey 2019</a>)</span>, entrepreneurship <span class="citation" data-cites="krishnan2019cost">(<a href="#ref-krishnan2019cost" role="doc-biblioref">Krishnan and Wang 2019</a>)</span>, the likelihood of default <span class="citation" data-cites="armona2022student mueller2019rise">(<a href="#ref-armona2022student" role="doc-biblioref">Armona, Chakrabarti, and Lovenheim 2022</a>; <a href="#ref-mueller2019rise" role="doc-biblioref">Mueller and Yannelis 2019</a>)</span>, borrowing <span class="citation" data-cites="dinerstein2024debt">(<a href="#ref-dinerstein2024debt" role="doc-biblioref">Dinerstein, Yannelis, and Chen 2024</a>)</span>, graduate school enrollment <span class="citation" data-cites="chakrabarti2023tuition">(<a href="#ref-chakrabarti2023tuition" role="doc-biblioref">Chakrabarti, Fos, et al. 2023</a>)</span>, and job mobility <span class="citation" data-cites="jacob2024value">(<a href="#ref-jacob2024value" role="doc-biblioref">Jacob, Jones, and Keys 2024</a>)</span>. <span class="citation" data-cites="chakrabarti2023borrower">Chakrabarti, Mangrum, et al. (<a href="#ref-chakrabarti2023borrower" role="doc-biblioref">2023</a>)</span> conduct a survey in August 2023, immediately prior to the resumption of student loan payments, and find that American consumers expected modest reductions in spending when payments resumed<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Raw data were processed by Verisk (now owned by Transunion), who then aggregated and scaled the data to provide us with estimates of the total number and value of credit and debit card transactions in every ZIP code at a weekly frequency. Similar data at a monthly frequency from Verisk are used in <span class="citation" data-cites="mian2023partisan">Mian, Sufi, and Khoshkhou (<a href="#ref-mian2023partisan" role="doc-biblioref">2023</a>)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>As discussed by <span class="citation" data-cites="dinerstein2024debt">Dinerstein, Yannelis, and Chen (<a href="#ref-dinerstein2024debt" role="doc-biblioref">2024</a>)</span>, the payment pause only applied to “federal” loans, which included all loans in the Direct Loan program, as well as roughly $100 billion in FFEL loans issued by private lenders and later bought by the Department of Education. These loans comprise the majority of overall student loan balances. The CCP does not provide a federal loan identifier, and we utilize the method proposed by <span class="citation" data-cites="GossMangrumScaley2024">Goss, Mangrum, and Scally (<a href="#ref-GossMangrumScaley2024" role="doc-biblioref">2024</a>)</span> to classify servicer sub-portfolios as “federal” if they showed past-due balances fall to zero by 2020:Q3 and remain at zero through the forbearance period. Our approach leads us to classify a total of [$1.25 trillion] of the total [$1.45 trillion] in student loan balances in 2023:Q3 as “federal” balances, and the aggregate series aligns well over time with data from the Department of Education (not shown here).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>As we discuss later in this note, we estimate that the average annual payment-to-balance ratio is roughly 5.75 percent per year.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>We convert the ZCTA-level ACS aggregates from NHGIS to ZIP codes using the crosswalk provided by the Health Resources and Services Administration: https://geocarenavigator.hrsa.gov/.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>We drop ZIP codes with a total ACS population below 2,000 as well as areas like college towns and military bases where the ACS and CCP populations do not align due to differences in billing addresses and residences. In total, our final sample includes 18,178 ZIP codes out of a total of 32,341 in Verisk. However, because most of the ZIP codes we drop have a low population, we maintain over 96 percent of the total ACS population and close to 98% of total student loan balances.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>To further assess the validity of our empirical design, we perform a placebo test using auto loan debt, which was unaffected by the restart of student loan payments in October 2023, and which we therefore expect to be uncorrelated with any trends in consumer spending. To perform this placebo test, we re-estimate <a href="#eq-event-study" class="quarto-xref">Equation&nbsp;1</a> using auto loan debt rather than student loan debt as the main independent variable. Reassuringly, we find no significant effect of auto loan debt on consumer spending during the entirety of our sample period.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>We note that student loan payments began at different times for different borrowers during the month of October, hence the blue shaded region in <a href="#fig-credit-avg" class="quarto-xref">Figure&nbsp;3</a> captures the window during which payments resumed for student loan borrowers.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>These numbers are based on the median debt level for a borrower in the 2022 Survey of Consumer Finances, about $25,000 and the mean student loan debt per borrower, about $47,000.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Note that while our estimates may include very local (i.e., within-ZIP code) general equilibrium effects, these estimates and do not consider the numerous national general equilibrium effects that could either offset or magnify this change in aggregate demand.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Because of changes in Income Driven Repayment plans and deferrals due to the SAVES Act in 2024, we opt to utilize data after reporting resumed rather than older data on payments. We find the ratio of annual required payments to balances for federal loans in the CCP where required payments are positive was 10.4 percent per year in 2024:Q3 through 2025:Q1. In addition, roughly 30 percent of federal loans by balance had required payments of 0. (Zero required payments reflect a combination of grace periods/deferrals, in-school status, and forbearance. See: https://www.congress.gov/crs-product/IF12896)<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>See, for example, <span class="citation" data-cites="gelman2023AEJ">Gelman et al. (<a href="#ref-gelman2023AEJ" role="doc-biblioref">2023</a>)</span>.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,372 @@
+{
+// Editor settings -------------------------------------------------------------
+"workbench.editor.languageDetection": true,
+"editor.acceptSuggestionOnEnter": "on",
+"editor.wordWrap": "on",
+"editor.rulers": [80],
+"update.mode": "none",
+"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+"editor.minimap.enabled": false,
+"editor.scrollbar.verticalScrollbarSize": 10,
+"editor.scrollbar.horizontalScrollbarSize": 10,
+// Scrolling settings
+"editor.cursorBlinking": "solid",
+"editor.cursorSmoothCaretAnimation": "off",
+"editor.smoothScrolling": false,
+"editor.stickyScroll.enabled": false,
+// Indentation settings
+"editor.autoIndent": "full",
+"editor.guides.indentation": false,
+"editor.detectIndentation": false,
+"editor.tabSize": 4,
+"editor.insertSpaces": false,
+
+"telemetry.enableCrashReporter": false,
+"telemetry.enableTelemetry": false,
+"extensions.autoUpdate": false,
+"workbench.enableExperiments": false,
+"terminal.integrated.rendererType": "dom",
+
+// "editor.tokenColorCustomizations": {
+//     "textMateRules": [
+//         {
+//             "scope": [
+//                 "variable.function.r"
+        //     ],
+        //     "settings": {
+        //         "foreground": "#DCDCAA"
+        //     }
+        // }, 
+        // {
+        //     "scope": [
+        //         "variable.parameter.r"
+        //     ],
+//             "settings": {
+//                 "foreground": "#8effaa"
+//             }
+//         }
+//     ]
+// },
+
+"workbench.colorTheme": "Monokai",
+"editor.tokenColorCustomizations": {
+    "[Monokai]": {
+        "textMateRules": [
+            {
+                "scope": [
+                    "variable.function.r",
+                ],
+                "settings": {
+                    "foreground": "#66D9EF",
+                }
+            },
+            // {
+            //     "scope": [
+            //         "entity.name.function.r",
+            //     ],
+            //     "settings": {
+            //         "foreground": "#66D9EF",
+            //     }
+            // }
+        ]
+    }
+},
+// Git Settings ----------------------------------------------------------------
+"git.autorefresh": true,
+"git.autofetch": false,
+// R Settings ------------------------------------------------------------------
+// R Path C
+"r.rpath.linux": "/opt/local/bin/R",
+"r.rterm.linux": "~/.local/bin/radian",
+"r.lsp.debug": true,
+"r.lsp.diagnostics": false,
+"r.rterm.option": [
+    // "--no-save",
+    // "--no-restore",
+    // "--r-binary=/opt/local/bin/R"
+],
+"r.alwaysUseActiveTerminal": true,
+"files.associations": {
+    "*.rmd": "markdown"
+},
+"[r]": {
+
+    "editor.defaultFormatter": "REditorSupport.r"
+  },
+  "[quarto]": {
+    "editor.defaultFormatter": "quarto.quarto"
+},
+  "r.removeLeadingComments": true,
+"r.sessionWatcher": true,
+// LaTeX Settings --------------------------------------------------------------
+"latex-workshop.latex.autoBuild.run": "onSave",
+"latex-workshop.linting.chktex.exec.path": "/opt/local/bin/chktex",
+"latex-workshop.synctex.path": "/usr/bin/synctex",
+"latex-workshop.texcount.path": "/opt/local/bin/texcount",
+"latex-workshop.texdoc.path": "/usr/bin/texdoc",
+"latex-workshop.kpsewhich.path": "/usr/bin/kpsewhich",
+"latex-workshop.latexindent.path": "/opt/local/bin/latexindent",
+"latex-workshop.linting.lacheck.exec.path": "/opt/local/bin/lacheck",
+"latex-workshop.latex.recipes": [
+	{
+		"name": "latexmk (lualatex)",
+		"tools": [
+			"lualatexmk"
+		]
+	},
+    {
+        "name": "latexmk",
+        "tools": [
+            "latexmk"
+        ]
+    },
+    {
+        "name": "latexmk (latexmkrc)",
+        "tools": [
+            "latexmk_rconly"
+        ]
+    },
+    {
+        "name": "latexmk (xelatex)",
+        "tools": [
+            "xelatexmk"
+        ]
+    },
+	{
+		"name": "lualatex -> biber -> lualatex * 2",
+		"tools": [
+			"lualatex",
+			"biber",
+			"lualatex", 
+			"lualatex"
+		]
+	},
+    {
+        "name": "pdflatex -> bibtex -> pdflatex * 2",
+        "tools": [
+            "pdflatex",
+            "bibtex",
+            "pdflatex",
+            "pdflatex"
+        ]
+    },
+    {
+        "name": "Compile Rnw files",
+        "tools": [
+            "rnw2tex",
+            "latexmk"
+        ]
+    },
+    {
+        "name": "Compile Jnw files",
+        "tools": [
+            "jnw2tex",
+            "latexmk"
+        ]
+    },
+    {
+        "name": "Compile Pnw files",
+        "tools": [
+            "pnw2tex",
+            "latexmk"
+        ]
+    },
+    {
+        "name": "tectonic",
+        "tools": [
+            "tectonic"
+        ]
+    }
+],
+"latex-workshop.latex.tools": [
+	{
+		"name": "latexmk",
+		"command": "latexmk",
+		"args": [
+			"-synctex=1",
+			"-interaction=nonstopmode",
+			"-file-line-error",
+			"-pdf",
+			"-outdir=%OUTDIR%",
+			"%DOC%"
+		],
+		"env": {}
+	},
+	{
+		"name": "lualatexmk",
+		"command": "latexmk",
+		"args": [
+			"-synctex=1",
+			"-interaction=nonstopmode",
+			"-file-line-error",
+			"-lualatex",
+			"-outdir=%OUTDIR%",
+			"%DOC%"
+		],
+		"env": {}
+	},
+	{
+		"name": "xelatexmk",
+		"command": "latexmk",
+		"args": [
+			"-synctex=1",
+			"-interaction=nonstopmode",
+			"-file-line-error",
+			"-xelatex",
+			"-outdir=%OUTDIR%",
+			"%DOC%"
+		],
+		"env": {}
+	},
+	{
+		"name": "latexmk_rconly",
+		"command": "latexmk",
+		"args": [
+			"%DOC%"
+		],
+		"env": {}
+	},
+	{
+		"name": "pdflatex",
+		"command": "pdflatex",
+		"args": [
+			"-synctex=1",
+			"-interaction=nonstopmode",
+			"-file-line-error",
+			"%DOC%"
+		],
+		"env": {}
+	},
+	{
+		"name": "bibtex",
+		"command": "bibtex",
+		"args": [
+			"%DOCFILE%"
+		],
+		"env": {}
+	},
+	{
+		"name": "biber",
+		"command": "biber",
+		"args": [
+			"%DOCFILE%"
+		],
+		"env": {}
+	},
+	{
+		"name": "rnw2tex",
+		"command": "Rscript",
+		"args": [
+			"-e",
+			"knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
+		],
+		"env": {}
+	},
+	{
+		"name": "jnw2tex",
+		"command": "julia",
+		"args": [
+			"-e",
+			"using Weave; weave(\"%DOC_EXT%\", doctype=\"tex\")"
+		],
+		"env": {}
+	},
+	{
+		"name": "jnw2texminted",
+		"command": "julia",
+		"args": [
+			"-e",
+			"using Weave; weave(\"%DOC_EXT%\", doctype=\"texminted\")"
+		],
+		"env": {}
+	},
+	{
+		"name": "pnw2tex",
+		"command": "pweave",
+		"args": [
+			"-f",
+			"tex",
+			"%DOC_EXT%"
+		],
+		"env": {}
+	},
+	{
+		"name": "pnw2texminted",
+		"command": "pweave",
+		"args": [
+			"-f",
+			"texminted",
+			"%DOC_EXT%"
+		],
+		"env": {}
+	},
+	{
+		"name": "tectonic",
+		"command": "tectonic",
+		"args": [
+			"--synctex",
+			"--keep-logs",
+			"--print",
+			"%DOC%.tex"
+		],
+		"env": {}
+	}
+],
+
+"latex-workshop.view.pdf.invertMode.brightness": 2,
+"[latex]": {
+    "editor.formatOnPaste": false,
+    "editor.suggestSelection": "recentlyUsedByPrefix"
+},
+"workbench.editorAssociations": {
+	"*.pdf": "pdf.view"
+},
+"keyboard.dispatch": "keyCode",
+"editor.multiCursorModifier": "ctrlCmd",
+// Commands to run python code in Jupyter terminal
+"macros": {  // Note: this requires macros extension by publisher:"geddski" 
+"pythonExecSelectionAndCursorDown": [
+    "jupyter.execSelectionInTerminal", 
+    "cursorDown" 
+]
+},
+"python.terminal.activateEnvInCurrentTerminal": true,
+// "python.defaultInterpreterPath": "/opt/local/bin/python3.9",
+"jupyter.interactiveWindow.textEditor.executeSelection": true,
+"quarto.usePipQuarto": false,
+"jupyter.interactiveWindow.creationMode": "perFile",
+"cSpell.userWords": [
+    "Astudillo",
+    "countercyclical",
+    "cyclicality",
+    "intertemporal",
+    "procyclical"
+],
+"MATLAB.installPath": "/apps/MATLAB/R2022a",
+"terminal.integrated.commandsToSkipShell": [
+    "matlab.interrupt",
+    "language-julia.interrupt"
+],
+"workbench.settings.applyToAllProfiles": [
+    "editor.tabSize"
+],
+"gitlens.ai.experimental.provider": "openai",
+"gitlens.ai.experimental.openai.model": "gpt-4o",
+"julia.symbolCacheDownload": true,
+"julia.enableTelemetry": true,
+"stataRun.whichApp": "stataMP",
+"stataRun.pasteSpeed": 1,
+"git.suggestSmartCommit": false,
+"git.confirmSync": false,
+"security.workspace.trust.untrustedFiles": "open",
+"r.bracketedPaste": true,
+"terminal.integrated.tabs.enabled": false,
+"markdown-preview-enhanced.latexEngine": "lualatex",
+"window.zoomLevel": -1,
+"diffEditor.ignoreTrimWhitespace": false,
+"r.session.levelOfObjectDetail": "Detailed",
+"stata-vscode.stataPath": "/opt/local/bin/stata",
+"[markdown]": {
+	"diffEditor.ignoreTrimWhitespace": true
+}
+}
